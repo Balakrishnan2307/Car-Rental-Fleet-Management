@@ -12081,16 +12081,16 @@ h5,
 
 .hero-top {
   margin-top: 75px;
-  /* height: 850px; */
+  height: 850px;
   background-size: cover;
   position: inherit;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('../images/bg_1.jpg');
-  /* background-color: var(--text-color); */
+  background-color: var(--text-color);
 }
-/* 
-.hero-wrap {
+
+/* .hero-wrap {
   width: 100%;
   height: 800px;
   position: inherit;
@@ -12121,8 +12121,8 @@ h5,
 
 .showcase .overlay {
   width: 100%;
-  height: 800px;
-  background-color: rgba(0, 0, 0, 0.7);
+  height: 600px;
+  /* background-color: rgba(0, 0, 0, 0.7); */
   position: absolute;
   top: 0;
   left: 0;
@@ -12169,6 +12169,9 @@ h5,
 @media (max-width: 991.98px) {
   .hero-wrap {
     height: 1000px;
+  }
+  .hero-top{
+    margin-top: -0px;
   }
 
   .hero-wrap .overlay {

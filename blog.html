@@ -1,325 +1,711 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
-  <title>Car Rental & Fleet Management</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenDrive - Blog Extended</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
-    rel="stylesheet">
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="css/animate.css">
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/magnific-popup.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/aos.css">
+  <style>
+    /* --- GLOBAL VARIABLES & TYPOGRAPHY --- */
+    :root {
+      --brand-primary: #01d28e;
+      /* Requested Color */
+      --brand-dark: #0d2e2b;
+      --text-gray: #6c757d;
+      --bg-light: #f8f9fa;
+      --bg-dark-card: #1e1e1e;
+    }
 
-  <link rel="stylesheet" href="css/ionicons.min.css">
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
 
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="css/jquery.timepicker.css">
+    /* --- UTILITIES --- */
+    .text-brand {
+      color: var(--brand-primary) !important;
+    }
 
+    .bg-brand {
+      background-color: var(--brand-primary) !important;
+      color: white !important;
+    }
 
-  <link rel="stylesheet" href="css/flaticon.css">
-  <link rel="shortcut icon" href="images/logo_green.png" type="image/x-icon">
-  <link rel="stylesheet" href="css/icomoon.css">
-  <link rel="stylesheet" href="css/style.css">
+    .btn-brand {
+      background-color: var(--brand-primary);
+      color: white;
+      border: 1px solid var(--brand-primary);
+      transition: all 0.3s ease;
+    }
+
+    .btn-brand:hover {
+      background-color: #00b075;
+      border-color: #00b075;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-brand {
+      color: var(--brand-primary);
+      border: 1px solid var(--brand-primary);
+      background: transparent;
+    }
+
+    .btn-outline-brand:hover {
+      background-color: var(--brand-primary);
+      color: white;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    [data-bs-theme="dark"] .navbar {
+      background-color: rgba(20, 20, 20, 0.95) !important;
+      border-bottom: 1px solid #333;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--brand-dark) !important;
+    }
+
+    [data-bs-theme="dark"] .navbar-brand {
+      color: white !important;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--brand-dark) !important;
+      margin: 0 10px;
+      transition: color 0.3s;
+    }
+
+    [data-bs-theme="dark"] .nav-link {
+      color: #e0e0e0 !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--brand-primary) !important;
+    }
+
+    /* --- HERO --- */
+    .blog-hero {
+      position: relative;
+      background: url('./images/image_3.jpg') no-repeat center center/cover;
+      padding: 180px 0 100px 0;
+      color: white;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(13, 46, 43, 0.9), rgba(1, 210, 142, 0.6));
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* --- NEW SECTION: FEATURED POST --- */
+    .featured-post {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      height: 400px;
+      margin-bottom: 40px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .featured-content {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+      width: 100%;
+      padding: 40px;
+      color: white;
+    }
+
+    .featured-badge {
+      background: var(--brand-primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* --- BLOG CARDS --- */
+    .blog-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    [data-bs-theme="dark"] .blog-card {
+      background: var(--bg-dark-card);
+      border-color: #333;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--brand-primary);
+    }
+
+    .blog-img-container {
+      position: relative;
+      overflow: hidden;
+      height: 250px;
+    }
+
+    .blog-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .blog-card:hover .blog-img {
+      transform: scale(1.1);
+    }
+
+    .blog-date-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--brand-primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    /* --- NEW SECTION: NEWSLETTER --- */
+    .newsletter-box {
+      background: linear-gradient(135deg, #0d2e2b 0%, #01d28e 100%);
+      border-radius: 15px;
+      padding: 50px 30px;
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+    }
+
+    .newsletter-input {
+      border: none;
+      padding: 15px 20px;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 15px;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar-widget {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 1px solid #eee;
+    }
+
+    [data-bs-theme="dark"] .sidebar-widget {
+      background: var(--bg-dark-card);
+      border-color: #333;
+    }
+
+    .widget-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--brand-primary);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .recent-post {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .recent-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .category-link {
+      display: block;
+      padding: 10px 0;
+      color: #666;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    [data-bs-theme="dark"] .category-link {
+      color: #bbb;
+      border-color: #333;
+    }
+
+    .category-link:hover {
+      color: var(--brand-primary);
+      padding-left: 10px;
+    }
+
+    /* --- NEW SECTION: INSTAGRAM FEED --- */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    .insta-item {
+      position: relative;
+      padding-bottom: 100%;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .insta-item img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.3s;
+    }
+
+    .insta-item:hover img {
+      transform: scale(1.1);
+      filter: brightness(0.7);
+    }
+
+    /* --- PAGINATION --- */
+    .custom-pagination .page-link {
+      color: #666;
+      border: none;
+      margin: 0 5px;
+      border-radius: 5px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-bs-theme="dark"] .custom-pagination .page-link {
+      color: #ddd;
+    }
+
+    .custom-pagination .page-item.active .page-link {
+      background-color: var(--brand-primary);
+      color: white;
+    }
+
+    .custom-pagination .page-link:hover {
+      background-color: var(--brand-primary);
+      color: white;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: var(--brand-dark);
+      color: white;
+      padding-top: 70px;
+    }
+
+    footer a {
+      color: #bbb;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--brand-primary);
+    }
+
+    /* RTL HELPERS */
+    html[dir="rtl"] .ms-auto {
+      margin-right: auto !important;
+      margin-left: 0 !important;
+    }
+
+    html[dir="rtl"] .me-2 {
+      margin-left: 0.5rem !important;
+      margin-right: 0 !important;
+    }
+
+    html[dir="rtl"] .category-link:hover {
+      padding-left: 0;
+      padding-right: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light ftco_navbar ftco-navbar-light">
-    <a class="navbar-brand" href="#"><img src="./images/logo_green.png" width="150px" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Home
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="index.html">Home 1</a>
-            <a class="dropdown-item" href="index_2.html">Home 2</a>
-          </div>
-        </li>
-        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="car.html" class="nav-link">Cars</a></li>
-        <li class="nav-item"><a href="blog.html" class="nav-link active">Blog</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-        <li class="nav-item"><a href="login_singnup.html" class="nav-link">Login / SignUp</a></li>
-      </ul>
-      <a href="rtl_blog.html" class="btn btn-secondary">RTL</a>
-      <button class="" style="margin-left: 5px; margin-right: 5px;" id="toggleBtn">🌙 Dark Mode</button>
-
-    </div>
-  </nav>
-  <!-- END nav -->
-
-  <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');"
-    data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
-        <div class="col-md-9 ftco-animate pb-5">
-          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                  class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i class="ion-ios-arrow-forward"></i></span>
-          </p>
-          <h1 class="mb-3 bread">Our Blog</h1>
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo_green.png" width="150x" alt="">
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Home</a>
+            <ul class="dropdown-menu border-0 shadow">
+              <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="index_2.html">Home 2</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Pages</a>
+            <ul class="dropdown-menu border-0 shadow">
+              <li><a class="dropdown-item" href="login_singnup.html">Login</a></li>
+              <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
+            </ul>
+          </li>
+
+        </ul>
+        <div class="d-flex gap-2 ms-3 align-items-center">
+          <button class="btn btn-sm border-secondary" onclick="toggleRTL()" title="RTL"><i class="fas fa-globe"></i>
+            <span id="rtl-label">LTR</span></button>
+          <button class="btn btn-sm border-secondary" onclick="toggleTheme()"><i class="fas fa-moon"
+              id="theme-icon"></i></button>
+          <a href="#book" class="btn btn-brand ms-2 rounded-pill px-4">Book Now</a>
         </div>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <section class="ftco-section">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry justify-content-end mb-md-5">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_1.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry justify-content-end mb-md-5">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_2.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_3.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry justify-content-end mb-md-5">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_4.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry justify-content-end mb-md-5">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_5.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 text-center d-flex ftco-animate">
-          <div class="blog-entry">
-            <a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_6.jpg');">
-            </a>
-            <div class="text px-md-5 pt-4">
-              <div class="meta mb-3">
-                <div><a href="#">Oct. 29, 2019</a></div>
-                <div><a href="#">Admin</a></div>
-                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-              </div>
-              <h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-              <p><a href="blog-single.html" class="btn btn-secondary">Continue <span
-                    class="icon-long-arrow-right"></span></a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col text-center">
-          <div class="block-27">
-            <ul>
-              <li><a href="#">&lt;</a></li>
-              <li class="active"><span>1</span></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&gt;</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  <!-- HERO HEADER -->
+  <header class="blog-hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center">
+      <h1 class="display-4 fw-bold mb-3">Latest News & Tips</h1>
+      <p class="lead opacity-75">Stay updated with our travel tips, car reviews, and company news.</p>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-center mb-0">
+          <li class="breadcrumb-item"><a href="#" class="text-white-50">Home</a></li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Blog</li>
+        </ol>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <footer class="ftco-footer ftco-bg-dark ftco-section">
-    <div class="container">
-      <div class="row mb-5">
-        <div class="col-md">
-          <div class="ftco-footer-widget mb-4">
-            <h2 class="ftco-heading-2"><a href="#" class="logo"><img src="./images/logo_green.png" width="200px" alt=""
-                  style="margin-top: -20px; margin-left: -20px;"></a></h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-              there live the
-              blind texts.</p>
-            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-              <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="ftco-footer-widget mb-4 ml-md-5">
-            <h2 class="ftco-heading-2">Information</h2>
-            <ul class="list-unstyled">
-              <li><a href="#" class="py-2 d-block">About</a></li>
-              <li><a href="#" class="py-2 d-block">Services</a></li>
-              <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-              <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-              <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="ftco-footer-widget mb-4">
-            <h2 class="ftco-heading-2">Customer Support</h2>
-            <ul class="list-unstyled">
-              <li><a href="#" class="py-2 d-block">FAQ</a></li>
-              <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-              <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-              <li><a href="#" class="py-2 d-block">How it works</a></li>
-              <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="ftco-footer-widget mb-4">
-            <h2 class="ftco-heading-2">Have a Questions?</h2>
-            <div class="block-23 mb-3">
-              <ul>
-                <li>
-                  <a href="#">
-                    <span class="icon icon-map-marker">
-
-                    </span>
-                    <span class="text">
-                      203 Fake St. Mountain View, San
-                      Francisco, California, USA</span>
-                  </a>
-                </li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
-                      210</span></a></li>
-                <li><a href="#"><span class="icon icon-envelope"></span><span
-                      class="text">info@yourdomain.com</span></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- MAIN CONTENT SECTION -->
+  <section class="py-5">
+    <div class="container py-5">
       <div class="row">
-        <div class="col-md-12 text-center">
+        <!-- Left Column: Blog Posts -->
+        <div class="col-lg-8">
 
-          <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | <i
-              class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#" target="_blank">Car Rental & Fleet
-              Management</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
+          <!-- NEW SECTION 1: FEATURED POST -->
+          <div class="featured-post" style="background-image: url('./images/car-1.jpg');">
+            <div class="featured-content">
+              <div class="mb-2">
+                <span class="featured-badge">Featured</span>
+                <span class="ms-2 small"><i class="fas fa-folder-open"></i> Travel Guide</span>
+              </div>
+              <h2 class="fw-bold mb-2 display-6">The Ultimate Guide to European Road Trips</h2>
+              <p class="mb-3 opacity-75">Discover the best routes, hidden gems, and essential tips for your next
+                European adventure.</p>
+              <a href="blog-details.html" class="btn btn-light btn-sm rounded-pill">Read Full Story</a>
+            </div>
+          </div>
+
+          <!-- Standard Blog Loop -->
+          <!-- Post 1 -->
+          <div class="blog-card">
+            <div class="blog-img-container">
+              <span class="blog-date-badge">Oct 24, 2023</span>
+              <a href="blog-details.html"><img src="images/car-7.jpg" class="blog-img"
+                  alt="Blog 1"></a>
+            </div>
+            <div class="p-4">
+              <div class="text-muted small mb-2"><i class="fas fa-user me-2 text-brand"></i> By Admin <i
+                  class="fas fa-folder-open ms-3 me-2 text-brand"></i> Tips</div>
+              <h3 class="fw-bold"><a href="blog-details.html" class="text-decoration-none text-dark">Top 5 Road Trips
+                  for Summer 2024</a></h3>
+              <p class="text-muted small mb-3">Planning a summer getaway? Here are the best scenic routes to take with
+                your rental car.</p>
+              <a href="blog-details.html" class="btn btn-outline-brand btn-sm rounded-pill">Read More</a>
+            </div>
+          </div>
+
+          <!-- Post 2 -->
+          <div class="blog-card">
+            <div class="blog-img-container">
+              <span class="blog-date-badge">Oct 20, 2023</span>
+              <a href="blog-details.html"><img src="images/car-9.jpg" class="blog-img"
+                  alt="Blog 2"></a>
+            </div>
+            <div class="p-4">
+              <div class="text-muted small mb-2"><i class="fas fa-user me-2 text-brand"></i> By Admin <i
+                  class="fas fa-folder-open ms-3 me-2 text-brand"></i> Car Care</div>
+              <h3 class="fw-bold"><a href="blog-details.html" class="text-decoration-none text-dark">How to Maintain
+                  Your Rental Car</a></h3>
+              <p class="text-muted small mb-3">Simple tips to keep the vehicle in top condition during your rental
+                period.</p>
+              <a href="blog-details.html" class="btn btn-outline-brand btn-sm rounded-pill">Read More</a>
+            </div>
+          </div>
+
+          <!-- Post 3 -->
+          <div class="blog-card">
+            <div class="blog-img-container">
+              <span class="blog-date-badge">Oct 15, 2023</span>
+              <a href="blog-details.html"><img src="images/image_6.jpg" class="blog-img"
+                  alt="Blog 3"></a>
+            </div>
+            <div class="p-4">
+              <div class="text-muted small mb-2"><i class="fas fa-user me-2 text-brand"></i> By James <i
+                  class="fas fa-folder-open ms-3 me-2 text-brand"></i> News</div>
+              <h3 class="fw-bold"><a href="blog-details.html" class="text-decoration-none text-dark">GreenDrive Expands
+                  to New York</a></h3>
+              <p class="text-muted small mb-3">We are excited to announce the opening of 5 new locations in NYC next
+                month.</p>
+              <a href="blog-details.html" class="btn btn-outline-brand btn-sm rounded-pill">Read More</a>
+            </div>
+          </div>
+
+          <!-- NEW SECTION 2: NEWSLETTER -->
+          <div class="newsletter-box">
+            <i class="fas fa-paper-plane fa-3x mb-3 opacity-50"></i>
+            <h4 class="fw-bold mb-3">Subscribe to Our Newsletter</h4>
+            <p class="mb-4 opacity-75">Get the latest travel tips, car rental deals, and news delivered to your inbox.
+            </p>
+            <form>
+              <div class="d-flex justify-content-center">
+                <input type="email" class="newsletter-input" placeholder="Enter your email">
+                <button type="submit" class="btn btn-dark rounded-pill px-4 fw-bold">Subscribe</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Page navigation" class="d-flex justify-content-center">
+            <ul class="pagination custom-pagination">
+              <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+          </nav>
+
         </div>
+
+        <!-- Right Column: Sidebar -->
+        <div class="col-lg-4">
+
+          <!-- Search Widget -->
+          <div class="sidebar-widget">
+            <h5 class="widget-title">Search</h5>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search...">
+              <button class="btn btn-brand" type="button"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Categories Widget -->
+          <div class="sidebar-widget">
+            <h5 class="widget-title">Categories</h5>
+            <ul class="list-unstyled mb-0">
+              <li><a href="#" class="category-link"><i class="fas fa-chevron-right small me-2 text-brand"></i> Car
+                  Reviews <span class="float-end text-muted small">(12)</span></a></li>
+              <li><a href="#" class="category-link"><i class="fas fa-chevron-right small me-2 text-brand"></i> Travel
+                  Tips <span class="float-end text-muted small">(8)</span></a></li>
+              <li><a href="#" class="category-link"><i class="fas fa-chevron-right small me-2 text-brand"></i> Car Care
+                  <span class="float-end text-muted small">(5)</span></a></li>
+              <li><a href="#" class="category-link"><i class="fas fa-chevron-right small me-2 text-brand"></i> News
+                  <span class="float-end text-muted small">(3)</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Recent Posts Widget -->
+          <div class="sidebar-widget">
+            <h5 class="widget-title">Recent Posts</h5>
+            <a href="blog-details.html" class="recent-post text-decoration-none text-dark">
+              <img src="https://picsum.photos/seed/recent1/150/150" class="recent-img" alt="Recent">
+              <div>
+                <h6 class="fw-bold mb-1 small">Electric Cars vs Hybrid</h6>
+                <small class="text-muted">Oct 10, 2023</small>
+              </div>
+            </a>
+            <a href="blog-details.html" class="recent-post text-decoration-none text-dark">
+              <img src="https://picsum.photos/seed/recent2/150/150" class="recent-img" alt="Recent">
+              <div>
+                <h6 class="fw-bold mb-1 small">Best GPS for Travel</h6>
+                <small class="text-muted">Oct 05, 2023</small>
+              </div>
+            </a>
+            <a href="blog-details.html" class="recent-post text-decoration-none text-dark">
+              <img src="https://picsum.photos/seed/recent3/150/150" class="recent-img" alt="Recent">
+              <div>
+                <h6 class="fw-bold mb-1 small">Insurance Guide</h6>
+                <small class="text-muted">Sep 28, 2023</small>
+              </div>
+            </a>
+          </div>
+
+          <!-- NEW SECTION 3: INSTAGRAM FEED -->
+          <div class="sidebar-widget">
+            <h5 class="widget-title">Follow Us <span class="text-brand">@GreenDrive</span></h5>
+            <div class="insta-grid">
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta1/150/150" alt="Insta"></a>
+              </div>
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta2/150/150" alt="Insta"></a>
+              </div>
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta3/150/150" alt="Insta"></a>
+              </div>
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta4/150/150" alt="Insta"></a>
+              </div>
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta5/150/150" alt="Insta"></a>
+              </div>
+              <div class="insta-item"><a href="#"><img src="https://picsum.photos/seed/insta6/150/150" alt="Insta"></a>
+              </div>
+            </div>
+            <div class="text-center mt-3">
+              <a href="#" class="btn btn-outline-brand btn-sm rounded-pill">View More</a>
+            </div>
+          </div>
+
+          <!-- Tags Widget -->
+          <div class="sidebar-widget">
+            <h5 class="widget-title">Tags</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="#" class="badge bg-light text-dark p-2 text-decoration-none">#Rental</a>
+              <a href="#" class="badge bg-light text-dark p-2 text-decoration-none">#Luxury</a>
+              <a href="#" class="badge bg-light text-dark p-2 text-decoration-none">#SUV</a>
+              <a href="#" class="badge bg-light text-dark p-2 text-decoration-none">#Travel</a>
+              <a href="#" class="badge bg-light text-dark p-2 text-decoration-none">#Tips</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container pb-4">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h4 class="fw-bold mb-3 text-white"><i class="fas fa-car-side text-brand me-2"></i>GreenDrive</h4>
+          <p class="small text-white-50">Making car rental simple, affordable, and accessible for everyone.</p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 class="fw-bold mb-3 text-white">Links</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#">Home</a></li>
+            <li class="mb-2"><a href="#">Services</a></li>
+            <li class="mb-2"><a href="#">Fleet</a></li>
+            <li class="mb-2"><a href="#">About</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h5 class="fw-bold mb-3 text-white">Blog</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#">Latest News</a></li>
+            <li class="mb-2"><a href="#">Tips</a></li>
+            <li class="mb-2"><a href="#">Reviews</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5 class="fw-bold mb-3 text-white">Contact</h5>
+          <ul class="list-unstyled small text-white-50">
+            <li class="mb-2"><i class="fas fa-map-marker-alt text-brand me-2"></i> 123 Car Street, Auto City</li>
+            <li class="mb-2"><i class="fas fa-phone text-brand me-2"></i> +1 (555) 123-4567</li>
+            <li class="mb-2"><i class="fas fa-envelope text-brand me-2"></i> info@greendrive.com</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="text-center small text-white-50">
+        &copy; 2023 GreenDrive Car Rental. All rights reserved.
       </div>
     </div>
   </footer>
 
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
-    </svg></div>
-
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      const currentTheme = html.getAttribute('data-bs-theme');
+      if (currentTheme === 'light') {
+        html.setAttribute('data-bs-theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        html.setAttribute('data-bs-theme', 'light');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+    function toggleRTL() {
+      const html = document.documentElement;
+      const label = document.getElementById('rtl-label');
+      if (html.getAttribute('dir') === 'rtl') {
+        html.setAttribute('dir', 'ltr');
+        label.innerText = 'LTR';
+      } else {
+        html.setAttribute('dir', 'rtl');
+        label.innerText = 'RTL';
+      }
+    }
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('shadow-sm');
+      } else {
+        navbar.classList.remove('shadow-sm');
+      }
+    });
+  </script>
 </body>
 
 </html>

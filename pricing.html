@@ -1,522 +1,625 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
-	<title>Car Rental & Fleet Management</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GreenDrive - Pricing Plans</title>
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+	<!-- Bootstrap 5.3 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- FontAwesome Icons -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 		rel="stylesheet">
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
+	<style>
+		/* --- GLOBAL VARIABLES & TYPOGRAPHY --- */
+		:root {
+			--brand-primary: #01d28e;
+			/* Requested Color */
+			--brand-dark: #0d2e2b;
+			--text-gray: #6c757d;
+			--bg-light: #f8f9fa;
+			--bg-dark-card: #1e1e1e;
+		}
 
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
+		body {
+			font-family: 'Poppins', sans-serif;
+			transition: background-color 0.3s, color 0.3s;
+			overflow-x: hidden;
+		}
 
-	<link rel="stylesheet" href="css/aos.css">
+		/* --- UTILITIES --- */
+		.text-brand {
+			color: var(--brand-primary) !important;
+		}
 
-	<link rel="stylesheet" href="css/ionicons.min.css">
+		.bg-brand {
+			background-color: var(--brand-primary) !important;
+			color: white !important;
+		}
 
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="css/jquery.timepicker.css">
+		.btn-brand {
+			background-color: var(--brand-primary);
+			color: white;
+			border: 1px solid var(--brand-primary);
+			transition: all 0.3s ease;
+		}
 
+		.btn-brand:hover {
+			background-color: #00b075;
+			border-color: #00b075;
+			color: white;
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(1, 210, 142, 0.4);
+		}
 
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="shortcut icon" href="images/logo_green.png" type="image/x-icon">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
+		.btn-outline-brand {
+			color: var(--brand-primary);
+			border: 1px solid var(--brand-primary);
+			background: transparent;
+		}
+
+		.btn-outline-brand:hover {
+			background-color: var(--brand-primary);
+			color: white;
+		}
+
+		/* --- NAVBAR --- */
+		.navbar {
+			box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+			backdrop-filter: blur(10px);
+			background-color: rgba(255, 255, 255, 0.95);
+		}
+
+		[data-bs-theme="dark"] .navbar {
+			background-color: rgba(20, 20, 20, 0.95) !important;
+			border-bottom: 1px solid #333;
+		}
+
+		.navbar-brand {
+			font-weight: 700;
+			font-size: 1.5rem;
+			color: var(--brand-dark) !important;
+		}
+
+		[data-bs-theme="dark"] .navbar-brand {
+			color: white !important;
+		}
+
+		.nav-link {
+			font-weight: 500;
+			color: var(--brand-dark) !important;
+			margin: 0 10px;
+			transition: color 0.3s;
+		}
+
+		[data-bs-theme="dark"] .nav-link {
+			color: #e0e0e0 !important;
+		}
+
+		.nav-link:hover,
+		.nav-link.active {
+			color: var(--brand-primary) !important;
+		}
+
+		/* --- HERO --- */
+		.pricing-hero {
+			position: relative;
+			background: url('https://picsum.photos/seed/carpark/1920/500') no-repeat center center/cover;
+			padding: 120px 0 80px 0;
+			color: white;
+			text-align: center;
+		}
+
+		.hero-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(13, 46, 43, 0.85);
+			z-index: 1;
+		}
+
+		.hero-content {
+			position: relative;
+			z-index: 2;
+		}
+
+		/* --- PRICING CARDS --- */
+		.pricing-card {
+			background: white;
+			border-radius: 20px;
+			padding: 40px 30px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+			border: 1px solid #eee;
+			transition: all 0.3s ease;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+		}
+
+		[data-bs-theme="dark"] .pricing-card {
+			background: var(--bg-dark-card);
+			border-color: #333;
+		}
+
+		/* Popular Card Highlight */
+		.pricing-card.popular {
+			border: 2px solid var(--brand-primary);
+			transform: scale(1.05);
+			z-index: 2;
+		}
+
+		.popular-badge {
+			position: absolute;
+			top: -15px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: var(--brand-primary);
+			color: white;
+			padding: 5px 20px;
+			border-radius: 20px;
+			font-weight: 600;
+			font-size: 0.8rem;
+		}
+
+		.price-display {
+			margin: 20px 0;
+			font-size: 3.5rem;
+			font-weight: 700;
+			color: var(--brand-dark);
+			line-height: 1;
+		}
+
+		[data-bs-theme="dark"] .price-display {
+			color: white;
+		}
+
+		.price-period {
+			font-size: 1rem;
+			font-weight: 400;
+			color: var(--text-gray);
+		}
+
+		.feature-list li {
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+		}
+
+		.feature-list i {
+			color: var(--brand-primary);
+			margin-right: 12px;
+		}
+
+		html[dir="rtl"] .feature-list i {
+			margin-right: 0;
+			margin-left: 12px;
+		}
+
+		/* --- COMPARISON TABLE --- */
+		.comparison-table {
+			background: white;
+			border-radius: 15px;
+			overflow: hidden;
+			border: 1px solid #eee;
+		}
+
+		[data-bs-theme="dark"] .comparison-table {
+			background: var(--bg-dark-card);
+			border-color: #333;
+		}
+
+		.table th {
+			padding: 15px;
+			font-weight: 600;
+			color: var(--text-gray);
+			border-bottom: 1px solid #eee;
+		}
+
+		[data-bs-theme="dark"] .table th {
+			border-color: #333;
+			color: #bbb;
+		}
+
+		.table td {
+			padding: 15px;
+			border-bottom: 1px solid #f0f0f0;
+			color: var(--brand-dark);
+		}
+
+		[data-bs-theme="dark"] .table td {
+			border-color: #333;
+			color: #ddd;
+		}
+
+		/* --- FAQ --- */
+		.accordion-item {
+			border: 1px solid #eee;
+			margin-bottom: 15px;
+			border-radius: 10px;
+			overflow: hidden;
+		}
+
+		[data-bs-theme="dark"] .accordion-item {
+			border-color: #333;
+		}
+
+		.accordion-button {
+			font-weight: 500;
+			color: var(--brand-dark);
+		}
+
+		[data-bs-theme="dark"] .accordion-button {
+			color: white;
+		}
+
+		.accordion-button:not(.collapsed) {
+			background-color: rgba(1, 210, 142, 0.05);
+			color: var(--brand-primary);
+		}
+
+		.accordion-button:focus {
+			box-shadow: none;
+		}
+
+		/* --- FOOTER --- */
+		footer {
+			background-color: var(--brand-dark);
+			color: white;
+			padding-top: 70px;
+		}
+
+		footer a {
+			color: #bbb;
+			text-decoration: none;
+			transition: 0.3s;
+		}
+
+		footer a:hover {
+			color: var(--brand-primary);
+		}
+
+		/* RTL HELPERS */
+		html[dir="rtl"] .ms-auto {
+			margin-right: auto !important;
+			margin-left: 0 !important;
+		}
+
+		html[dir="rtl"] .me-2 {
+			margin-left: 0.5rem !important;
+			margin-right: 0 !important;
+		}
+
+		html[dir="rtl"] .text-md-end {
+			text-align: start !important;
+		}
+
+		html[dir="rtl"] .popular-badge {
+			left: auto;
+			right: 50%;
+			transform: translateX(50%);
+		}
+	</style>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-light ftco_navbar ftco-navbar-light">
-		<a class="navbar-brand" href="#"><img src="./images/logo_green.png" width="150px" alt=""></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-						aria-expanded="false">
-						Home
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="index.html">Home 1</a>
-						<a class="dropdown-item" href="index_2.html">Home 2</a>
-					</div>
-				</li>
-				<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-				<li class="nav-item"><a href="pricing.html" class="nav-link active">Pricing</a></li>
-				<li class="nav-item"><a href="car.html" class="nav-link">Cars</a></li>
-				<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-				<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-				<li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-				<li class="nav-item"><a href="login_singnup.html" class="nav-link">Login / SignUp</a></li>
-			</ul>
-			<a href="rtl_pricing.html" class="btn btn-secondary">RTL</a>
-			<button class="" style="margin-left: 5px; margin-right: 5px;" id="toggleBtn">🌙 Dark Mode</button>
-
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-expand-lg fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="#"><i class="fas fa-car-side text-brand me-2"></i>Green<span
+					class="text-brand">Drive</span></a>
+			<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<i class="fas fa-bars"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto align-items-center">
+					<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+					<li class="nav-item"><a class="nav-link active" href="pricing.html">Pricing</a></li>
+					<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+					<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+				</ul>
+				<div class="d-flex gap-2 ms-3 align-items-center">
+					<button class="btn btn-sm border-secondary" onclick="toggleRTL()"><i class="fas fa-globe"></i> <span
+							id="rtl-label">LTR</span></button>
+					<button class="btn btn-sm border-secondary" onclick="toggleTheme()"><i class="fas fa-moon"
+							id="theme-icon"></i></button>
+					<a href="#" class="btn btn-brand ms-2 rounded-pill px-4">Book Now</a>
+				</div>
+			</div>
 		</div>
 	</nav>
-	<!-- END nav -->
 
-	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/bg_3.jpg');"
-		data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
-				<div class="col-md-9 ftco-animate pb-5">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-									class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i
-								class="ion-ios-arrow-forward"></i></span></p>
-					<h1 class="mb-3 bread">Pricing</h1>
+	<!-- HERO SECTION -->
+	<header class="pricing-hero">
+		<div class="hero-overlay"></div>
+		<div class="container hero-content">
+			<h1 class="display-4 fw-bold mb-3">Choose Your Perfect Plan</h1>
+			<p class="lead opacity-75">Transparent pricing for daily, weekly, and monthly rentals. No hidden fees.</p>
+		</div>
+	</header>
+
+	<!-- SECTION 1: PRICING CARDS -->
+	<section class="py-5">
+		<div class="container py-5">
+			<div class="row justify-content-center">
+
+				<!-- Plan 1: Economy -->
+				<div class="col-md-4 mb-4">
+					<div class="pricing-card">
+						<h4 class="fw-bold mb-2">Economy</h4>
+						<div class="price-display">$35</div>
+						<div class="price-period">per day</div>
+						<ul class="list-unstyled feature-list mt-4 mb-4">
+							<li><i class="fas fa-check-circle"></i> 150 Miles Included</li>
+							<li><i class="fas fa-check-circle"></i> Basic Insurance</li>
+							<li><i class="fas fa-check-circle"></i> 2 Passengers</li>
+							<li class="text-muted text-decoration-line-through"><i
+									class="fas fa-times-circle text-gray"></i> 24/7 Support</li>
+							<li class="text-muted text-decoration-line-through"><i
+									class="fas fa-times-circle text-gray"></i> Free Cancellation</li>
+						</ul>
+						<a href="#" class="btn btn-outline-brand w-100 py-3 rounded-pill mt-auto">Choose Economy</a>
+					</div>
 				</div>
+
+				<!-- Plan 2: Business (POPULAR) -->
+				<div class="col-md-4 mb-4">
+					<div class="pricing-card popular">
+						<span class="popular-badge">Most Popular</span>
+						<h4 class="fw-bold mb-2">Business</h4>
+						<div class="price-display">$65</div>
+						<div class="price-period">per day</div>
+						<ul class="list-unstyled feature-list mt-4 mb-4">
+							<li><i class="fas fa-check-circle"></i> 300 Miles Included</li>
+							<li><i class="fas fa-check-circle"></i> Full Insurance</li>
+							<li><i class="fas fa-check-circle"></i> 5 Passengers</li>
+							<li><i class="fas fa-check-circle"></i> 24/7 Support</li>
+							<li><i class="fas fa-check-circle"></i> Free Cancellation</li>
+						</ul>
+						<a href="#" class="btn btn-brand w-100 py-3 rounded-pill mt-auto">Choose Business</a>
+					</div>
+				</div>
+
+				<!-- Plan 3: Luxury -->
+				<div class="col-md-4 mb-4">
+					<div class="pricing-card">
+						<h4 class="fw-bold mb-2">Luxury</h4>
+						<div class="price-display">$120</div>
+						<div class="price-period">per day</div>
+						<ul class="list-unstyled feature-list mt-4 mb-4">
+							<li><i class="fas fa-check-circle"></i> Unlimited Miles</li>
+							<li><i class="fas fa-check-circle"></i> Premium Insurance</li>
+							<li><i class="fas fa-check-circle"></i> Any Car Model</li>
+							<li><i class="fas fa-check-circle"></i> VIP Concierge</li>
+							<li><i class="fas fa-check-circle"></i> Free Cancellation</li>
+						</ul>
+						<a href="#" class="btn btn-outline-brand w-100 py-3 rounded-pill mt-auto">Choose Luxury</a>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-cart">
+	<!-- SECTION 2: COMPARISON TABLE -->
+	<section class="py-5 bg-light">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 ftco-animate">
-					<div class="car-list">
-						<table class="table">
-							<thead class="thead-primary">
-								<tr class="text-center">
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-									<th class="bg-primary heading">Per Hour Rate</th>
-									<th class="bg-dark heading">Per Day Rate</th>
-									<th class="bg-black heading">Leasing</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-1.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-2.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-3.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-4.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-
-
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-5.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-
-
-								<tr class="">
-									<td class="car-image">
-										<div class="img" style="background-image:url(images/car-6.jpg);"></div>
-									</td>
-									<td class="product-name">
-										<h3>Cheverolet SUV Car</h3>
-										<p class="mb-0 rated">
-											<span>rated:</span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-											<span class="ion-ios-star"></span>
-										</p>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 10.99</span>
-												<span class="per">/per hour</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 60.99</span>
-												<span class="per">/per day</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-
-									<td class="price">
-										<p class="btn-custom"><a href="#">Rent a car</a></p>
-										<div class="price-rate">
-											<h3>
-												<span class="num"><small class="currency">$</small> 995.99</span>
-												<span class="per">/per month</span>
-											</h3>
-											<span class="subheading">$3/hour fuel surcharges</span>
-										</div>
-									</td>
-								</tr><!-- END TR-->
-							</tbody>
-						</table>
-					</div>
-				</div>
+			<div class="text-center mb-5">
+				<span class="text-uppercase fw-bold text-brand">Compare Features</span>
+				<h2 class="fw-bold">Plans Breakdown</h2>
+			</div>
+			<div class="table-responsive comparison-table">
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr>
+							<th scope="col">Features</th>
+							<th scope="col">Economy</th>
+							<th class="text-brand" scope="col">Business <span
+									class="badge bg-brand text-white ms-2">Best Value</span></th>
+							<th scope="col">Luxury</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Daily Rate</td>
+							<td>$35</td>
+							<td class="fw-bold text-brand">$65</td>
+							<td>$120</td>
+						</tr>
+						<tr>
+							<td>Mileage Limit</td>
+							<td>150 mi/day</td>
+							<td>300 mi/day</td>
+							<td>Unlimited</td>
+						</tr>
+						<tr>
+							<td>Insurance</td>
+							<td>Basic</td>
+							<td>Full Coverage</td>
+							<td>Premium VIP</td>
+						</tr>
+						<tr>
+							<td>Support</td>
+							<td>Email Only</td>
+							<td>Phone & Email</td>
+							<td>24/7 Concierge</td>
+						</tr>
+						<tr>
+							<td>Cancellation</td>
+							<td>24h Notice</td>
+							<td class="text-brand">Free Cancellation</td>
+							<td class="text-brand">Free Cancellation</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</section>
 
-
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
+	<!-- SECTION 3: FAQ -->
+	<section class="py-5">
 		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2"><a href="#" class="logo"><img src="./images/logo_green.png"
-									width="200px" alt="" style="margin-top: -20px; margin-left: -20px;"></a></h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-							there live the
-							blind texts.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-						</ul>
+			<div class="row justify-content-center">
+				<div class="col-lg-8">
+					<div class="text-center mb-5">
+						<span class="text-uppercase fw-bold text-brand">FAQ</span>
+						<h2 class="fw-bold">Frequently Asked Questions</h2>
 					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">About</a></li>
-							<li><a href="#" class="py-2 d-block">Services</a></li>
-							<li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-							<li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-							<li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Customer Support</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">FAQ</a></li>
-							<li><a href="#" class="py-2 d-block">Payment Option</a></li>
-							<li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-							<li><a href="#" class="py-2 d-block">How it works</a></li>
-							<li><a href="#" class="py-2 d-block">Contact Us</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li>
-									<a href="#">
-										<span class="icon icon-map-marker">
 
-										</span>
-										<span class="text">
-											203 Fake St. Mountain View, San
-											Francisco, California, USA</span>
-									</a>
-								</li>
-								<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
-											210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-											class="text">info@yourdomain.com</span></a></li>
-							</ul>
+					<div class="accordion" id="faqAccordion">
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button" type="button" data-bs-toggle="collapse"
+									data-bs-target="#faq1">
+									What is included in the daily rate?
+								</button>
+							</h2>
+							<div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+								<div class="accordion-body">
+									The daily rate includes the rental fee, standard insurance, and 150 miles of driving
+									(for Economy). Fuel and parking fees are the responsibility of the renter.
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+									data-bs-target="#faq2">
+									Can I extend my rental period?
+								</button>
+							</h2>
+							<div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+								<div class="accordion-body">
+									Yes, you can extend your rental at any time by calling our support line or logging
+									into your account. Extensions are subject to vehicle availability.
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+									data-bs-target="#faq3">
+									Is there a deposit required?
+								</button>
+							</h2>
+							<div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+								<div class="accordion-body">
+									A security deposit is required for all rentals. The amount varies by vehicle class
+									and is fully refundable upon return of the vehicle in good condition.
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
+		</div>
+	</section>
 
-					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | <i
-							class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#"
-							target="_blank">Car Rental & Fleet Management</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
+	<!-- SECTION 4: CTA -->
+	<section class="py-5">
+		<div class="container">
+			<div class="text-center p-5 rounded" style="background: rgba(1, 210, 142, 0.1);">
+				<h2 class="fw-bold">Need a Custom Fleet Deal?</h2>
+				<p class="mb-4">For long-term rentals or corporate needs, contact our sales team for a tailored quote.
+				</p>
+				<a href="contact.html" class="btn btn-brand btn-lg rounded-pill px-5">Contact Sales</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- FOOTER -->
+	<footer>
+		<div class="container pb-4">
+			<div class="row g-4">
+				<div class="col-lg-4">
+					<h4 class="fw-bold mb-3 text-white"><i class="fas fa-car-side text-brand me-2"></i>GreenDrive</h4>
+					<p class="small text-white-50">Making car rental simple, affordable, and accessible for everyone.
+						Join thousands of satisfied customers today.</p>
 				</div>
+				<div class="col-lg-2 col-6">
+					<h5 class="fw-bold mb-3 text-white">Links</h5>
+					<ul class="list-unstyled small">
+						<li class="mb-2"><a href="#">Home</a></li>
+						<li class="mb-2"><a href="#">Services</a></li>
+						<li class="mb-2"><a href="#">Fleet</a></li>
+						<li class="mb-2"><a href="#">Pricing</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-2 col-6">
+					<h5 class="fw-bold mb-3 text-white">Help</h5>
+					<ul class="list-unstyled small">
+						<li class="mb-2"><a href="#">FAQ</a></li>
+						<li class="mb-2"><a href="#">Terms</a></li>
+						<li class="mb-2"><a href="#">Support</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-4">
+					<h5 class="fw-bold mb-3 text-white">Contact</h5>
+					<ul class="list-unstyled small text-white-50">
+						<li class="mb-2"><i class="fas fa-map-marker-alt text-brand me-2"></i> 123 Car Street, Auto City
+						</li>
+						<li class="mb-2"><i class="fas fa-phone text-brand me-2"></i> +1 (555) 123-4567</li>
+						<li class="mb-2"><i class="fas fa-envelope text-brand me-2"></i> info@greendrive.com</li>
+					</ul>
+				</div>
+			</div>
+			<hr class="border-secondary my-4">
+			<div class="text-center small text-white-50">
+				&copy; 2023 GreenDrive Car Rental. All rights reserved.
 			</div>
 		</div>
 	</footer>
 
+	<!-- Bootstrap 5 JS Bundle -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
-
-
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
-
+	<!-- Custom Scripts -->
+	<script>
+		function toggleTheme() {
+			const html = document.documentElement;
+			const icon = document.getElementById('theme-icon');
+			const currentTheme = html.getAttribute('data-bs-theme');
+			if (currentTheme === 'light') {
+				html.setAttribute('data-bs-theme', 'dark');
+				icon.classList.remove('fa-moon');
+				icon.classList.add('fa-sun');
+			} else {
+				html.setAttribute('data-bs-theme', 'light');
+				icon.classList.remove('fa-sun');
+				icon.classList.add('fa-moon');
+			}
+		}
+		function toggleRTL() {
+			const html = document.documentElement;
+			const label = document.getElementById('rtl-label');
+			if (html.getAttribute('dir') === 'rtl') {
+				html.setAttribute('dir', 'ltr');
+				label.innerText = 'LTR';
+			} else {
+				html.setAttribute('dir', 'rtl');
+				label.innerText = 'RTL';
+			}
+		}
+		window.addEventListener('scroll', function () {
+			const navbar = document.querySelector('.navbar');
+			if (window.scrollY > 50) {
+				navbar.classList.add('shadow-sm');
+			} else {
+				navbar.classList.remove('shadow-sm');
+			}
+		});
+	</script>
 </body>
 
 </html>

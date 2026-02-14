@@ -4,891 +4,1224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Rental & Fleet Management</title>
-
-    <link rel="shortcut icon" href="images/logo_green.png" type="image/x-icon">
-
-    <!-- Google Fonts: Poppins & Open Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>DriveFlow - Complete Management System</title>
     <style>
+        /* --- CSS VARIABLES & THEME --- */
         :root {
-            /* Core Palette */
             --primary-color: #01d28e;
-            --primary-dark: #00b57b;
-            --primary-faded: rgba(1, 210, 142, 0.1);
-
-            /* Light Mode (Default) */
-            --bg-body: #f3f6f8;
-            --bg-sidebar: #ffffff;
-            --bg-card: #ffffff;
-            --text-main: #2d3436;
-            --text-muted: #636e72;
-            --border-color: #eef1f5;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            --sidebar-width: 260px;
+            --primary-hover: #00b075;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #777777;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --danger: #ff4d4f;
+            --warning: #faad14;
+            --success: #52c41a;
+            --chart-grid: #e0e0e0;
+            --transition: all 0.3s ease;
         }
 
-        /* Dark Mode Overrides */
         body.dark-mode {
-            --bg-body: #111418;
-            --bg-sidebar: #1a1f26;
-            --bg-card: #1a1f26;
-            --text-main: #dfe6e9;
-            --text-muted: #a0aec0;
-            --border-color: #2d3748;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            --bg-color: #121212;
+            --sidebar-bg: #1e1e1e;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --chart-grid: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
-        }
-
-        /* Typography Override */
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .nav-link,
-        .card-title,
-        .btn {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* --- Sidebar Navigation --- */
-        #sidebar {
-            width: var(--sidebar-width);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
             height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid var(--border-color);
-            z-index: 1000;
-            padding: 1.5rem;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .brand-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 2.5rem;
-            text-decoration: none;
-        }
-
-        .brand-logo i {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .nav-link {
-            color: var(--text-muted);
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            background-color: var(--primary-faded);
-            color: var(--primary-color);
-        }
-
-        /* --- Main Content Area --- */
-        #main-wrapper {
-            margin-left: var(--sidebar-width);
-            padding: 2rem;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* --- Header --- */
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .theme-toggle-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .theme-toggle-btn:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: rotate(15deg);
-        }
-
-        .profile-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            cursor: pointer;
-        }
-
-        /* --- Cards & Metrics --- */
-        .custom-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-            transition: background-color 0.3s, border-color 0.3s;
-            padding: 15px;
-        }
-
-        .metric-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.5rem;
-        }
-
-        .metric-icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 14px;
-            background-color: var(--primary-faded);
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-        }
-
-        .metric-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }
-
-        /* --- Flow Chart (CSS) --- */
-        .flow-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 1rem;
-            position: relative;
-        }
-
-        .flow-bg-line {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background-color: var(--border-color);
-            z-index: 0;
-            transform: translateY(-50%);
-        }
-
-        .flow-step {
-            position: relative;
-            z-index: 1;
-            background-color: var(--bg-card);
-            padding: 0 10px;
-            text-align: center;
-            transition: transform 0.2s;
-        }
-
-        .flow-step:hover {
-            transform: translateY(-5px);
-        }
-
-        .step-circle {
-            width: 45px;
-            height: 45px;
-            background-color: var(--primary-color);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            box-shadow: 0 0 0 6px var(--bg-card);
-            font-weight: 600;
-        }
-
-        .step-circle.future {
-            background-color: var(--border-color);
-            color: var(--text-muted);
-        }
-
-        /* --- Car Showroom --- */
-        .car-card-img-wrapper {
-            position: relative;
-            height: 180px;
             overflow: hidden;
         }
 
-        .car-card-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .car-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .status-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .status-badge.rented {
-            background-color: #ff9f43;
-        }
-
-        /* --- Tables --- */
-        .custom-table thead th {
-            border-bottom: 2px solid var(--border-color);
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.85rem;
+        /* --- LAYOUT --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
             padding: 1rem;
-            background: transparent;
+            transition: var(--transition);
+            overflow-y: auto;
         }
 
-        .custom-table td {
-            padding: 1rem;
-            vertical-align: middle;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .customer-cell {
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0 2rem 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 3rem;
+        .brand span {
+            color: var(--text-color);
         }
 
-        /* --- Responsive --- */
-        @media (max-width: 991px) {
-            #sidebar {
-                transform: translateX(-100%);
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(1, 210, 142, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link svg {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--sidebar-bg);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* --- UI COMPONENTS --- */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .content-scroll {
+            padding: 2rem;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* --- DASHBOARD GRIDS & CARDS --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(1, 210, 142, 0.15);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .stat-trend {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* --- TABLES --- */
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            color: var(--text-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: rgba(82, 196, 26, 0.15);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background-color: rgba(250, 173, 20, 0.15);
+            color: var(--warning);
+        }
+
+        .status-cancelled {
+            background-color: rgba(255, 77, 79, 0.15);
+            color: var(--danger);
+        }
+
+        /* --- FORMS --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* --- ANALYTICS CHARTS (CSS ONLY) --- */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Bar Chart */
+        .bar-chart-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding-top: 2rem;
+            gap: 10px;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar {
+            width: 100%;
+            max-width: 40px;
+            background-color: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .bar:hover {
+            opacity: 1;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .bar-val {
+            position: absolute;
+            top: -20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Pie Chart */
+        .pie-chart-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .pie-chart {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-color) 0% 40%, var(--warning) 40% 70%, var(--danger) 70% 100%);
+            position: relative;
+        }
+
+        .pie-legend {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* --- FLEET GRID --- */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .car-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .car-details {
+            padding: 1.25rem;
+        }
+
+        .car-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .car-price {
+            color: var(--primary-color);
+        }
+
+        .car-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* --- UTILITY --- */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            width: 150px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--primary-color);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .charts-row {
+                grid-template-columns: 1fr;
             }
 
-            #sidebar.active {
-                transform: translateX(0);
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: -260px;
+                height: 100%;
+                box-shadow: var(--shadow);
+                z-index: 100;
             }
 
-            #main-wrapper {
-                margin-left: 0;
-            }
-
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
+            .sidebar.mobile-open {
                 left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 999;
             }
 
-            .overlay.active {
+            .mobile-menu-btn {
                 display: block;
+                margin-right: 1rem;
+                cursor: pointer;
+                background: none;
+                border: none;
+                color: var(--text-color);
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none;
             }
         }
     </style>
 </head>
 
-<body>
+<body class="light-mode">
 
-    <!-- Mobile Sidebar Overlay -->
-    <div class="overlay" id="overlay"></div>
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="10" width="20" height="8" rx="2"></rect>
+                <path d="M5 10l2-5h10l2 5"></path>
+                <circle cx="7" cy="18" r="2"></circle>
+                <circle cx="17" cy="18" r="2"></circle>
+            </svg>
+            Drive<span>Flow</span>
+        </div>
 
-    <!-- Sidebar -->
-    <nav id="sidebar">
-        <a href="#" class="brand-logo">
-            <img src="./images/logo_green.png" width="150px" alt="">
-        </a>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a href="#" class="nav-link active">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-car"></i> Fleet Management
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-calendar-check"></i> Bookings
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-users"></i> Customers
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-chart-pie"></i> Analytics
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-wallet"></i> Sales & Revenue
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="index.html" class="nav-link">
-                    <i class="fas fa-home"></i> Back to Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="login_singnup.html" class="nav-link">
-                    <i class="fas fa-lock"></i>Logout
-                </a>
-            </li>
+        <ul class="nav-links" id="navLinks">
+            <!-- Admin Navigation -->
+            <li class="nav-item"><a class="nav-link active" onclick="navigate('dashboard', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('analytics', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Analytics
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('sales', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    Sales & Revenue
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('bookings', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    </svg>
+                    All Bookings
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('new-booking', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                    New Booking
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('fleet', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="10" width="20" height="8" rx="2"></rect>
+                        <path d="M5 10l2-5h10l2 5"></path>
+                    </svg>
+                    Fleet Management
+                </a></li>
+            <li class="nav-item"><a class="nav-link" onclick="navigate('customers', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                    </svg>
+                    Customers
+                </a></li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
-    <div id="main-wrapper">
-        <!-- Header -->
-        <header class="top-header">
-            <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-light d-lg-none border-0" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header>
+            <div style="display: flex; align-items: center;">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </button>
-                <h4 class="m-0 fw-bold">Dashboard Overview</h4>
+                <div class="header-title">
+                    <h2 id="pageTitle" style="font-size: 1.25rem; font-weight: 600;">Dashboard</h2>
+                </div>
             </div>
 
-            <div class="d-flex align-items-center gap-3">
-                <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
-                    <i class="fas fa-moon"></i>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme"
+                    style="cursor:pointer; background:none; border:none; color:var(--text-color); font-size:1.2rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
                 </button>
-                <div class="d-flex align-items-center gap-2">
-                    <div class="d-none d-md-block text-end">
-                        <div class="fw-bold" style="font-size: 0.9rem;">Alex Johnson</div>
-                        <div class="text-muted" style="font-size: 0.75rem;">Fleet Manager</div>
+
+                <div class="user-menu">
+                    <button class="user-btn" id="userMenuBtn">
+                        <div class="user-avatar">AD</div>
+                        <span>Admin</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="dropdown" id="userDropdown">
+                        <span class="dropdown-item">Profile</span>
+                        <span class="dropdown-item">Settings</span>
+                        <span class="dropdown-item logout" onclick="showToast('Logged out')">Logout</span>
                     </div>
-                    <img src="https://picsum.photos/seed/admin/100/100" alt="Admin" class="profile-img">
                 </div>
             </div>
         </header>
 
-        <!-- Counter Details -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card metric-card">
-                    <div>
-                        <div class="metric-value" data-target="142">0</div>
-                        <div class="text-muted small">Total Vehicles</div>
-                    </div>
-                    <div class="metric-icon-box">
-                        <i class="fas fa-car"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card metric-card">
-                    <div>
-                        <div class="metric-value" data-target="86">0</div>
-                        <div class="text-muted small">Active Rentals</div>
-                    </div>
-                    <div class="metric-icon-box">
-                        <i class="fas fa-key"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card metric-card">
-                    <div>
-                        <div class="metric-value" data-target="54">0</div>
-                        <div class="text-muted small">Monthly Sales (k)</div>
-                    </div>
-                    <div class="metric-icon-box">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card metric-card">
-                    <div>
-                        <div class="metric-value" data-target="1250">0</div>
-                        <div class="text-muted small">New Customers</div>
-                    </div>
-                    <div class="metric-icon-box">
-                        <i class="fas fa-users"></i>
-                    </div>
-                </div>
-            </div>
+        <div class="content-scroll" id="mainContainer">
+            <!-- Dynamic Content Loads Here -->
         </div>
+    </main>
 
-        <!-- Charts & Flow Section -->
-        <div class="row g-4 mb-4">
-            <!-- Bar Chart -->
-            <div class="col-lg-8">
-                <div class="custom-card h-100">
-                    <div
-                        class="card-header bg-transparent border-0 py-3 p-5 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold">Revenue Analytics</h5>
-                        <select class="form-select form-select-sm w-auto border-secondary-subtle">
-                            <option>This Year</option>
-                            <option>Last Year</option>
-                        </select>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="revenueChart" style="max-height: 300px;"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Flow Chart -->
-            <div class="col-lg-4">
-                <div class="custom-card h-100">
-                    <div class="card-header bg-transparent border-0 py-3">
-                        <h5 class="mb-0 fw-bold">Booking Lifecycle</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="flow-container">
-                            <div class="flow-bg-line"></div>
-
-                            <div class="flow-step">
-                                <div class="step-circle"><i class="fas fa-clipboard-list"></i></div>
-                                <div class="small fw-bold">Request</div>
-                            </div>
-
-                            <div class="flow-step">
-                                <div class="step-circle"><i class="fas fa-check"></i></div>
-                                <div class="small fw-bold">Approve</div>
-                            </div>
-
-                            <div class="flow-step">
-                                <div class="step-circle"><i class="fas fa-car"></i></div>
-                                <div class="small fw-bold">Active</div>
-                            </div>
-
-                            <div class="flow-step">
-                                <div class="step-circle future"><i class="fas fa-flag-checkered"></i></div>
-                                <div class="small fw-bold text-muted">Return</div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted small">Completion Rate</span>
-                                <span class="fw-bold small" style="color:var(--primary-color)">85%</span>
-                            </div>
-                            <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-success" role="progressbar"
-                                    style="width: 85%; background-color: var(--primary-color) !important;"
-                                    aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Car Showroom Details -->
-        <div class="row g-4 mb-4">
-            <div class="col-12">
-                <h5 class="fw-bold mb-3">Trending Fleet</h5>
-            </div>
-            <!-- Car 1 -->
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card overflow-hidden">
-                    <div class="car-card-img-wrapper">
-                        <img src="images/car-10.jpg" alt="Tesla Model 3">
-                        <span class="status-badge">Available</span>
-                    </div>
-                    <div class="p-3">
-                        <h6 class="fw-bold mb-1">Tesla Model 3</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted small"><i class="fas fa-bolt me-1"></i> Electric</span>
-                            <span class="fw-bold" style="color:var(--primary-color)">$120/day</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Car 2 -->
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card overflow-hidden">
-                    <div class="car-card-img-wrapper">
-                        <img src="images/car-11.jpg" alt="Audi Q7">
-                        <span class="status-badge rented">Rented</span>
-                    </div>
-                    <div class="p-3">
-                        <h6 class="fw-bold mb-1">Audi Q7</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted small"><i class="fas fa-gas-pump me-1"></i> Petrol</span>
-                            <span class="fw-bold" style="color:var(--primary-color)">$200/day</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Car 3 -->
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card overflow-hidden">
-                    <div class="car-card-img-wrapper">
-                        <img src="images/car-12.jpg" alt="BMW 5 Series">
-                        <span class="status-badge">Available</span>
-                    </div>
-                    <div class="p-3">
-                        <h6 class="fw-bold mb-1">BMW 5 Series</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted small"><i class="fas fa-tachometer-alt me-1"></i> Auto</span>
-                            <span class="fw-bold" style="color:var(--primary-color)">$150/day</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Car 4 -->
-            <div class="col-md-6 col-xl-3">
-                <div class="custom-card overflow-hidden">
-                    <div class="car-card-img-wrapper">
-                        <img src="images/car-9.jpg" alt="Jeep Wrangler">
-                        <span class="status-badge">Available</span>
-                    </div>
-                    <div class="p-3">
-                        <h6 class="fw-bold mb-1">Jeep Wrangler</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted small"><i class="fas fa-mountain me-1"></i> SUV</span>
-                            <span class="fw-bold" style="color:var(--primary-color)">$180/day</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Data Lists: Booking, Customer, Sales -->
-        <div class="row g-4 mb-5">
-            <!-- Booking List -->
-            <div class="col-lg-4">
-                <div class="custom-card h-100">
-                    <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="fw-bold mb-0">Recent Bookings</h6>
-                    </div>
-                    <div class="table-responsive p-0">
-                        <table class="table table-hover custom-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Car</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#204</td>
-                                    <td>Model 3</td>
-                                    <td><span class="badge bg-success"
-                                            style="background-color: var(--primary-color) !important;">Confirmed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#205</td>
-                                    <td>Mustang</td>
-                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#206</td>
-                                    <td>Q7</td>
-                                    <td><span class="badge bg-secondary">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#207</td>
-                                    <td>Wrangler</td>
-                                    <td><span class="badge bg-danger">Cancelled</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Customer List -->
-            <div class="col-lg-4">
-                <div class="custom-card h-100">
-                    <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="fw-bold mb-0">New Customers</h6>
-                    </div>
-                    <div class="table-responsive p-0">
-                        <table class="table table-hover custom-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Date</th>
-                                    <th>Mail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="customer-cell">
-                                            <img src="https://picsum.photos/seed/user1/30/30" class="rounded-circle"
-                                                alt="">
-                                            <span class="fw-bold">Sarah J.</span>
-                                        </div>
-                                    </td>
-                                    <td>Oct 24</td>
-                                    <td><i class="fas fa-envelope text-muted"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer-cell">
-                                            <img src="https://picsum.photos/seed/user2/30/30" class="rounded-circle"
-                                                alt="">
-                                            <span class="fw-bold">Mike R.</span>
-                                        </div>
-                                    </td>
-                                    <td>Oct 23</td>
-                                    <td><i class="fas fa-envelope text-muted"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer-cell">
-                                            <img src="https://picsum.photos/seed/user3/30/30" class="rounded-circle"
-                                                alt="">
-                                            <span class="fw-bold">Emma W.</span>
-                                        </div>
-                                    </td>
-                                    <td>Oct 22</td>
-                                    <td><i class="fas fa-envelope text-muted"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sales List -->
-            <div class="col-lg-4">
-                <div class="custom-card h-100">
-                    <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="fw-bold mb-0">Top Agents</h6>
-                    </div>
-                    <div class="table-responsive p-0">
-                        <table class="table table-hover custom-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Agent</th>
-                                    <th>Sales</th>
-                                    <th>Rank</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>$12,400</td>
-                                    <td class="text-warning"><i class="fas fa-trophy"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Anna Smith</td>
-                                    <td>$10,200</td>
-                                    <td class="text-muted"><i class="fas fa-medal"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Robert B.</td>
-                                    <td>$8,900</td>
-                                    <td class="text-muted"><i class="fas fa-medal"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Lisa K.</td>
-                                    <td>$7,500</td>
-                                    <td>4th</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <p class="mb-1">&copy; 2026 Car Rental & Fleet Management. All Rights Reserved.</p>
-            
-        </footer>
-
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- TOAST -->
+    <div class="toast" id="toast">Action Successful</div>
 
     <script>
-        // --- 1. Dark/Light Mode Logic ---
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const icon = themeToggle.querySelector('i');
+        // --- DATA ---
+        const fleetData = [
+            { id: 1, name: "Tesla Model 3", type: "Electric", price: 85, status: "Available", image: "https://picsum.photos/seed/tesla/300/160" },
+            { id: 2, name: "BMW 5 Series", type: "Sedan", price: 90, status: "Rented", image: "https://picsum.photos/seed/bmw/300/160" },
+            { id: 3, name: "Jeep Wrangler", type: "SUV", price: 75, status: "Available", image: "https://picsum.photos/seed/jeep/300/160" },
+            { id: 4, name: "Mercedes C-Class", type: "Sedan", price: 95, status: "Maintenance", image: "https://picsum.photos/seed/merc/300/160" },
+        ];
 
-        // Load saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            icon.classList.replace('fa-moon', 'fa-sun');
+        const bookingsData = [
+            { id: 101, car: "Toyota RAV4", customer: "John Doe", date: "2023-10-15", status: "Active", total: "$180" },
+            { id: 102, car: "BMW 5 Series", customer: "Alice Smith", date: "2023-10-18", status: "Pending", total: "$270" },
+            { id: 103, car: "Jeep Wrangler", customer: "Bob Jones", date: "2023-10-10", status: "Completed", total: "$225" },
+            { id: 104, car: "Tesla Model 3", customer: "Clara White", date: "2023-10-20", status: "Cancelled", total: "$0" },
+            { id: 105, car: "Ford Mustang", customer: "David Lee", date: "2023-10-22", status: "Active", total: "$330" },
+        ];
+
+        // --- STATE & NAVIGATION ---
+        let currentPage = 'dashboard';
+        const mainContainer = document.getElementById('mainContainer');
+        const pageTitle = document.getElementById('pageTitle');
+
+        function navigate(page, element) {
+            currentPage = page;
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            if (element) element.classList.add('active');
+
+            // Close mobile menu
+            document.getElementById('sidebar').classList.remove('mobile-open');
+            renderPage();
         }
 
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-
-            if (body.classList.contains('dark-mode')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-                updateChart(true);
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
-                updateChart(false);
+        function renderPage() {
+            mainContainer.innerHTML = '';
+            switch (currentPage) {
+                case 'dashboard': renderDashboard(); break;
+                case 'analytics': renderAnalytics(); break;
+                case 'sales': renderSales(); break;
+                case 'bookings': renderBookingsList(); break;
+                case 'new-booking': renderNewBooking(); break;
+                case 'fleet': renderFleet(); break;
+                case 'customers': renderCustomers(); break;
             }
-        });
-
-        // --- 2. Mobile Sidebar Toggle ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const overlay = document.getElementById('overlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
         }
 
-        sidebarToggle.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-
-        // --- 3. Counter Animation ---
-        const counters = document.querySelectorAll('.metric-value');
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const speed = 200; // controls animation speed
-
-                const inc = target / speed;
-
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(updateCount, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCount();
-        });
-
-        // --- 4. Chart.js Implementation ---
-        const ctx = document.getElementById('revenueChart').getContext('2d');
-
-        const salesData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-            datasets: [{
-                label: 'Revenue ($)',
-                data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000, 38000, 42000],
-                backgroundColor: '#01d28e',
-                borderRadius: 4,
-                barThickness: 12,
-            }]
-        };
-
-        // Chart Configuration
-        let revenueChart = new Chart(ctx, {
-            type: 'bar',
-            data: salesData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#e9ecef',
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            color: '#636e72',
-                            callback: function (value) { return '$' + value / 1000 + 'k'; }
-                        }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#636e72' }
-                    }
-                }
-            }
-        });
-
-        // Update Chart Colors on Theme Toggle
-        function updateChart(isDark) {
-            const textColor = isDark ? '#a0aec0' : '#636e72';
-            const gridColor = isDark ? '#2d3748' : '#e9ecef';
-
-            revenueChart.options.scales.y.grid.color = gridColor;
-            revenueChart.options.scales.y.ticks.color = textColor;
-            revenueChart.options.scales.x.ticks.color = textColor;
-            revenueChart.update();
+        // --- VIEW: DASHBOARD (Overview) ---
+        function renderDashboard() {
+            pageTitle.textContent = "Dashboard Overview";
+            mainContainer.innerHTML = `
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">Total Revenue</span>
+                            <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+                        </div>
+                        <div class="stat-value">$45,200</div>
+                        <div class="stat-trend">+12.5% <span style="color:var(--text-muted); font-weight:400;">vs last month</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">Active Bookings</span>
+                            <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg></div>
+                        </div>
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">8 pending approval</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">Fleet Utilization</span>
+                            <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="10" width="20" height="8" rx="2"></rect></svg></div>
+                        </div>
+                        <div class="stat-value">82%</div>
+                        <div class="stat-label">12 cars available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">New Customers</span>
+                            <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+                        </div>
+                        <div class="stat-value">145</div>
+                        <div class="stat-trend">+5.2% <span style="color:var(--text-muted); font-weight:400;">this week</span></div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-bottom:1rem;">Recent Activity</h3>
+                ${getBookingsTableHTML(3)}
+            `;
         }
+
+        // --- VIEW: ANALYTICS ---
+        function renderAnalytics() {
+            pageTitle.textContent = "Business Analytics";
+            mainContainer.innerHTML = `
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Bookings</span>
+                        <div class="stat-value">1,240</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Avg. Rental Duration</span>
+                        <div class="stat-value">4.2 Days</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Customer Satisfaction</span>
+                        <div class="stat-value">4.8/5.0</div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <!-- Bar Chart: Monthly Bookings -->
+                    <div class="chart-card">
+                        <h4>Monthly Bookings (2023)</h4>
+                        <div class="bar-chart-container">
+                            ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'].map((m, i) => {
+                const h = Math.floor(Math.random() * 60) + 40; // Random height
+                return `
+                                    <div class="bar-group">
+                                        <div class="bar" style="height: ${h}%;">
+                                            <span class="bar-val">${h * 1.5}</span>
+                                        </div>
+                                        <span class="bar-label">${m}</span>
+                                    </div>
+                                `;
+            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart: Fleet Status -->
+                    <div class="chart-card">
+                        <h4>Fleet Status Distribution</h4>
+                        <div class="pie-chart-wrapper">
+                            <div class="pie-chart"></div>
+                            <div class="pie-legend">
+                                <div class="legend-item"><div class="dot" style="background:var(--primary-color)"></div> Rented</div>
+                                <div class="legend-item"><div class="dot" style="background:var(--warning)"></div> Maint.</div>
+                                <div class="legend-item"><div class="dot" style="background:var(--danger)"></div> Idle</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- VIEW: SALES & REVENUE ---
+        function renderSales() {
+            pageTitle.textContent = "Sales & Revenue";
+            mainContainer.innerHTML = `
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Gross Revenue</span>
+                        <div class="stat-value" style="color:var(--primary-color)">$124,500</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Net Profit</span>
+                        <div class="stat-value">$89,200</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Refunds Processed</span>
+                        <div class="stat-value" style="color:var(--danger)">$1,250</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Recent Transactions</h3>
+                        <div>
+                            <button class="btn-outline" onclick="showToast('Downloading CSV...')">Export CSV</button>
+                            <button class="btn-primary">Generate Report</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Vehicle</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#TRX-9988</td>
+                                <td>Oct 24, 2023</td>
+                                <td>John Doe</td>
+                                <td>Toyota RAV4</td>
+                                <td style="font-weight:bold; color:var(--primary-color)">$180.00</td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-9987</td>
+                                <td>Oct 23, 2023</td>
+                                <td>Sarah Connor</td>
+                                <td>Tesla Model 3</td>
+                                <td style="font-weight:bold; color:var(--primary-color)">$340.00</td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-9986</td>
+                                <td>Oct 22, 2023</td>
+                                <td>Mike Ross</td>
+                                <td>BMW 5 Series</td>
+                                <td style="font-weight:bold; color:var(--primary-color)">$270.00</td>
+                                <td><span class="status-badge status-cancelled">Refunded</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-9985</td>
+                                <td>Oct 21, 2023</td>
+                                <td>Rachel Green</td>
+                                <td>Jeep Wrangler</td>
+                                <td style="font-weight:bold; color:var(--primary-color)">$450.00</td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // --- VIEW: BOOKING LIST ---
+        function renderBookingsList() {
+            pageTitle.textContent = "Booking Management";
+            mainContainer.innerHTML = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>All Bookings</h3>
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" placeholder="Search ID or Customer..." class="form-control" style="width:200px;">
+                            <select class="form-control" style="width:150px;">
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Pending</option>
+                                <option>Completed</option>
+                            </select>
+                            <button class="btn-primary" onclick="navigate('new-booking', null)">+ New Booking</button>
+                        </div>
+                    </div>
+                    ${getBookingsTableHTML(10, true)}
+                </div>
+            `;
+        }
+
+        // --- VIEW: NEW BOOKING FORM ---
+        function renderNewBooking() {
+            pageTitle.textContent = "Create New Booking";
+            mainContainer.innerHTML = `
+                <div class="stat-card" style="max-width: 800px; margin: 0 auto;">
+                    <form onsubmit="event.preventDefault(); showToast('Booking Created Successfully!'); navigate('bookings', null);">
+                        <h3 style="margin-bottom:1.5rem; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Customer Details</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" placeholder="john@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+1 (555) 000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label>Driver License ID</label>
+                                <input type="text" class="form-control" placeholder="License Number">
+                            </div>
+                        </div>
+
+                        <h3 style="margin:2rem 0 1.5rem 0; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Rental Details</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Select Vehicle</label>
+                                <select class="form-control">
+                                    ${fleetData.map(c => `<option value="${c.name}">${c.name} ($${c.price}/day)</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Pick-up Location</label>
+                                <select class="form-control">
+                                    <option>Downtown Office</option>
+                                    <option>Airport Terminal 1</option>
+                                    <option>City Mall Branch</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Pick-up Date</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Return Date</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                                <input type="checkbox"> Add Full Insurance Coverage (+$15/day)
+                            </label>
+                        </div>
+
+                        <div style="margin-top:2rem; display:flex; justify-content:flex-end; gap:1rem;">
+                            <button type="button" class="btn-outline" onclick="navigate('bookings', null)">Cancel</button>
+                            <button type="submit" class="btn-primary">Confirm Booking</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        // --- VIEW: FLEET MANAGEMENT ---
+        function renderFleet() {
+            pageTitle.textContent = "Fleet Management";
+            let carsHtml = fleetData.map(car => `
+                <div class="car-card">
+                    <img src="${car.image}" class="car-image" alt="${car.name}">
+                    <div class="car-details">
+                        <div class="car-title">
+                            ${car.name}
+                            <span class="status-badge ${getStatusClass(car.status)}" style="font-size: 0.75rem;">${car.status}</span>
+                        </div>
+                        <div class="car-meta">
+                            <span>${car.type}</span> • <span>$${car.price}/day</span>
+                        </div>
+                        <div class="car-actions">
+                            <button class="btn-outline" onclick="showToast('Editing ${car.name}...')">Edit</button>
+                            <button class="btn-outline" style="color:var(--danger); border-color:var(--danger);" onclick="showToast('Maintenance Mode')">Maintain</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            mainContainer.innerHTML = `
+                <div class="table-container" style="display:flex; justify-content:space-between; align-items:center; padding:1rem;">
+                    <h3>Vehicle Inventory</h3>
+                    <button class="btn-primary" onclick="showToast('Add Vehicle Form')">+ Add Vehicle</button>
+                </div>
+                <div class="fleet-grid">
+                    ${carsHtml}
+                </div>
+            `;
+        }
+
+        // --- VIEW: CUSTOMERS ---
+        function renderCustomers() {
+            pageTitle.textContent = "Customer Database";
+            mainContainer.innerHTML = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Registered Users</h3>
+                        <input type="text" placeholder="Search customer..." class="form-control" style="width:250px;">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Joined Date</th>
+                                <th>Total Bookings</th>
+                                <th>Total Spent</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <div class="user-avatar" style="background:#01d28e;">JD</div>
+                                        <div>
+                                            <div style="font-weight:600;">John Doe</div>
+                                            <div style="font-size:0.8rem; color:var(--text-muted);">ID: 88392</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>john@example.com</td>
+                                <td>Oct 10, 2023</td>
+                                <td>3</td>
+                                <td style="font-weight:600;">$540.00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td><button class="btn-outline" style="padding:0.2rem 0.5rem;">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <div class="user-avatar" style="background:#faad14;">AS</div>
+                                        <div>
+                                            <div style="font-weight:600;">Alice Smith</div>
+                                            <div style="font-size:0.8rem; color:var(--text-muted);">ID: 99201</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>alice@example.com</td>
+                                <td>Sep 22, 2023</td>
+                                <td>1</td>
+                                <td style="font-weight:600;">$90.00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td><button class="btn-outline" style="padding:0.2rem 0.5rem;">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <div class="user-avatar" style="background:#ff4d4f;">BJ</div>
+                                        <div>
+                                            <div style="font-weight:600;">Bob Jones</div>
+                                            <div style="font-size:0.8rem; color:var(--text-muted);">ID: 77123</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>bob@example.com</td>
+                                <td>Aug 15, 2023</td>
+                                <td>0</td>
+                                <td style="font-weight:600;">$0.00</td>
+                                <td><span class="status-badge status-cancelled">Blacklisted</span></td>
+                                <td><button class="btn-outline" style="padding:0.2rem 0.5rem;">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // --- HELPERS ---
+
+        function getBookingsTableHTML(limit, actions = false) {
+            const data = bookingsData.slice(0, limit);
+            const rows = data.map(b => `
+                <tr>
+                    <td>#${b.id}</td>
+                    <td>${b.car}</td>
+                    <td>${b.customer}</td>
+                    <td>${b.date}</td>
+                    <td><span class="status-badge ${getStatusClass(b.status)}">${b.status}</span></td>
+                    <td>${b.total}</td>
+                    ${actions ? `<td><button class="btn-outline" style="padding:0.2rem 0.5rem" onclick="showToast('Manage Booking #${b.id}')">Manage</button></td>` : ''}
+                </tr>
+            `).join('');
+
+            return `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vehicle</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            ${actions ? '<th>Action</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        function getStatusClass(status) {
+            if (status === 'Active' || status === 'Available' || status === 'Completed') return 'status-active';
+            if (status === 'Pending' || status === 'Maintenance') return 'status-pending';
+            if (status === 'Cancelled' || status === 'Rented') return 'status-cancelled';
+            return '';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- EVENT LISTENERS ---
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        document.getElementById('userMenuBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('userDropdown').classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('userDropdown').classList.remove('show');
+        });
+
+        // Init
+        renderDashboard();
+
     </script>
 </body>
 

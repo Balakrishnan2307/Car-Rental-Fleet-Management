@@ -1,124 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Rental & Fleet Management</title>
     <link rel="shortcut icon" href="images/logo_green.png" type="image/x-icon">
-
-    <!-- Fonts: Poppins (Headings) & Open Sans (Body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            /* Mandatory Primary Color */
-            --primary-color: #01d28e;
-            --primary-hover: #019e6c;
-            --text-main: #1f2937;
-            --bg-body: #f8f9fa;
+            --brand-primary: #01d28e;
+            --brand-dark: #0d2e2b;
+            --text-gray: #6c757d;
+            --bg-light: #f8f9fa;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-body);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .btn,
-        .form-label,
-        .navbar-brand {
             font-family: 'Poppins', sans-serif;
-        }
-
-        /* --- Left Side: Car Image Section --- */
-        .image-side {
-            background-image: url('./images/bg_1.jpg');
-            /* High quality car seed */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 3rem;
-        }
-
-        /* Dark Overlay for better text readability on image */
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
-            z-index: 1;
-        }
-
-        .image-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-
-        .brand-logo-lg {
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
+            background-color: #eef2f5;
+            /* Slight off-white background for contrast */
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            color: var(--primary-color);
-        }
-
-        /* --- Right Side: Form Section --- */
-        .form-side {
-            height: 100vh;
-            overflow-y: auto;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            background-color: white;
+            transition: background-color 0.3s;
+            padding: 20px;
         }
 
+        [data-bs-theme="dark"] body {
+            background-color: #0a0a0a;
+        }
+
+        /* Main Card Container */
         .auth-card {
-            max-width: 450px;
             width: 100%;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease-in-out;
+            max-width: 450px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-bs-theme="dark"] .auth-card {
+            background-color: #121212;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid #222;
+        }
+
+        /* Logo Styling */
+        .form-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-logo img {
+            max-width: 160px;
+            height: auto;
+        }
+
+        /* Form Elements */
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-weight: 700;
+            color: var(--brand-dark);
+            font-size: 1.75rem;
+        }
+
+        [data-bs-theme="dark"] .form-header h2 {
+            color: white;
+        }
+
+        .form-header p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .form-floating>label {
+            color: #888;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            height: auto;
+            font-size: 0.95rem;
+        }
+
+        [data-bs-theme="dark"] .form-control {
+            background-color: #1e1e1e;
+            border-color: #333;
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 0.15rem rgba(1, 210, 142, 0.2);
+        }
+
+        .btn-brand {
+            background-color: var(--brand-primary);
+            border: none;
+            color: white;
+            padding: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .btn-brand:hover {
+            background-color: #00b075;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(1, 210, 142, 0.3);
+        }
+
+        /* Social Buttons */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        [data-bs-theme="dark"] .divider::before,
+        [data-bs-theme="dark"] .divider::after {
+            border-color: #333;
+        }
+
+        .divider span {
+            padding: 0 10px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--brand-dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        [data-bs-theme="dark"] .social-btn {
+            color: white;
+            border-color: #333;
+        }
+
+        .social-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        [data-bs-theme="dark"] .social-btn:hover {
+            background-color: #2c2c2c;
+        }
+
+        .social-btn i {
+            margin-right: 8px;
+        }
+
+        /* Toggle Switch */
+        .toggle-text {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .toggle-link {
+            color: var(--brand-primary);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-light);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        /* Hide/Show Logic */
+        .form-box {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .form-box.active {
+            display: block;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(5px);
             }
 
             to {
@@ -127,115 +258,14 @@
             }
         }
 
-        /* --- Form Elements --- */
-        .form-control {
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            background-color: #f9fafb;
-            font-size: 0.95rem;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 0 4px rgba(1, 210, 142, 0.2);
-            border-color: var(--primary-color);
-            background-color: white;
-        }
-
-        .form-floating>.form-control:focus~label {
-            color: var(--primary-color);
-        }
-
-        .btn-primary-custom {
-            background-color: var(--primary-color);
-            border: none;
-            padding: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            border-radius: 8px;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary-custom:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(1, 210, 142, 0.3);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #9ca3af;
-            margin: 1.5rem 0;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .divider:not(:empty)::before {
-            margin-right: .5em;
-        }
-
-        .divider:not(:empty)::after {
-            margin-left: .5em;
-        }
-
-        .social-btn {
-            width: 100%;
-            border: 1px solid #e5e7eb;
-            padding: 0.7rem;
-            border-radius: 8px;
-            background: white;
-            color: var(--text-main);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .social-btn:hover {
-            background-color: #f9fafb;
-            border-color: #d1d5db;
-        }
-
-        .switch-link {
-            color: #6b7280;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .switch-link span {
-            color: var(--primary-color);
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .switch-link span:hover {
-            text-decoration: underline;
-        }
-
-        /* Toast Message Styling */
-        #authToast {
-            z-index: 1050;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 991px) {
-            .image-side {
-                display: none;
+        /* Responsive */
+        @media (max-width: 576px) {
+            .auth-card {
+                padding: 30px 25px;
             }
 
-            .form-side {
-                height: auto;
-                min-height: 100vh;
+            .social-login {
+                flex-direction: column;
             }
         }
     </style>
@@ -243,271 +273,156 @@
 
 <body>
 
-    <div class="container-fluid p-0">
-        <div class="row g-0">
+    <div class="auth-card">
 
-            <!-- Left Side: Image & Branding -->
-            <div class="col-lg-6 image-side d-none d-lg-flex">
-                <div class="image-overlay"></div>
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
 
-                <div class="image-content w-100">
-                    <a href="index.html" class="brand-logo-lg">
-                        <img src="./images/logo_green.png" width="150px" alt="">
-                    </a>
-                </div>
+        <!-- Logo Top -->
+        <div class="form-logo">
+            <a href="index.html">
+                <!-- Replace with your actual logo src -->
+                <img src="images/logo_green.png" alt="GreenDrive Logo">
+            </a>
+        </div>
 
-                <div class="image-content w-100 mb-5">
-                    <h2 style="font-size: 3rem; font-weight: 700; line-height: 1.2;">Premium Car Rental<br>Experience.
-                    </h2>
-                    <p style="font-size: 1.1rem; opacity: 0.9; max-width: 400px;">
-                        Join thousands of satisfied customers and book your dream ride in seconds with the best rates in
-                        town.
-                    </p>
-                </div>
+        <!-- LOGIN FORM -->
+        <div id="login-form" class="form-box active">
+            <div class="form-header">
+                <h2>Welcome Back</h2>
+                <p>Login to your account to continue</p>
             </div>
 
-            <!-- Right Side: Forms -->
-            <div class="col-lg-6 form-side">
-
-                <!-- Mobile Logo (Visible only on small screens) -->
-                <div class="text-center d-lg-none mb-4">
-                    <a href="index.html" class="brand-logo-lg" style="color: var(--text-main);">
-                        <img src="./images/logo_green.png" width="150px" style="margin-left: -20px;" alt="">
-                    </a>
+            <form>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                    <label for="loginEmail">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                    <label for="loginPassword">Password</label>
                 </div>
 
-                <div class="auth-card">
+                <div class="d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label small" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="small" style="color: var(--brand-primary); text-decoration: none;">Forgot
+                        Password?</a>
+                </div>
 
-                    <!-- LOGIN FORM -->
-                    <div id="loginContainer">
-                        <h3 class="fw-bold mb-1">Welcome Back!</h3>
-                        <p class="text-muted mb-4">Please enter your details to sign in.</p>
+                <button type="submit" class="btn btn-brand w-100 mb-3">Login</button>
 
-                        <form id="loginForm">
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com"
-                                    required>
-                                <label for="loginEmail">Email address</label>
-                            </div>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
 
-                            <div class="input-group mb-3">
-                                <div class="form-floating flex-grow-1">
-                                    <input type="password" class="form-control" id="loginPassword"
-                                        placeholder="Password" required>
-                                    <label for="loginPassword">Password</label>
-                                </div>
-                                <span class="input-group-text bg-white" style="cursor: pointer;"
-                                    onclick="togglePassword('loginPassword', this)">
-                                    <i class="bi bi-eye"></i>
-                                </span>
-                            </div>
+                <div class="social-login">
+                    <a href="#" class="social-btn"><i class="fab fa-google text-danger"></i> Google</a>
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f text-primary"></i> Facebook</a>
+                </div>
 
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe">
-                                    <label class="form-check-label text-muted" for="rememberMe"
-                                        style="font-size: 0.9rem;">
-                                        Remember me
-                                    </label>
-                                </div>
-                                <a href="#" class="text-decoration-none fw-bold"
-                                    style="color: var(--primary-color); font-size: 0.9rem;">Forgot Password?</a>
-                            </div>
+                <div class="toggle-text">
+                    Don't have an account? <span class="toggle-link" onclick="toggleForm('signup')">Sign Up</span>
+                </div>
+            </form>
+        </div>
 
-                            <button type="submit" class="btn btn-primary-custom">
-                                Sign In
-                            </button>
-                        </form>
+        <!-- SIGNUP FORM -->
+        <div id="signup-form" class="form-box">
+            <div class="form-header">
+                <h2>Create Account</h2>
+                <p>Sign up to get access to exclusive deals</p>
+            </div>
 
-                        <div class="divider">Or continue with</div>
-
-                        <div class="row g-2 mb-4">
-                            <div class="col-6">
-                                <button class="social-btn">
-                                    <i class="bi bi-google text-danger"></i> Google
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <button class="social-btn">
-                                    <i class="bi bi-facebook text-primary"></i> Facebook
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <p class="switch-link">Don't have an account? <span onclick="switchForm('signup')">Sign
-                                    Up</span></p>
+            <form>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="signupName" placeholder="John Doe">
+                    <label for="signupName">Full Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com">
+                    <label for="signupEmail">Email address</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="signupPhone" placeholder="+1 234 567 890">
+                            <label for="signupPhone">Phone</label>
                         </div>
                     </div>
-
-                    <!-- SIGNUP FORM (Hidden by default) -->
-                    <div id="signupContainer" style="display: none;">
-                        <h3 class="fw-bold mb-1">Create Account</h3>
-                        <p class="text-muted mb-4">Join Car Rental & Fleet Management for exclusive deals.</p>
-
-                        <form id="signupForm">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="signupName" placeholder="Full Name"
-                                    required>
-                                <label for="signupName">Full Name</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com"
-                                    required>
-                                <label for="signupEmail">Email address</label>
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <div class="form-floating flex-grow-1">
-                                    <input type="password" class="form-control" id="signupPassword"
-                                        placeholder="Password" required>
-                                    <label for="signupPassword">Password</label>
-                                </div>
-                                <span class="input-group-text bg-white" style="cursor: pointer;"
-                                    onclick="togglePassword('signupPassword', this)">
-                                    <i class="bi bi-eye"></i>
-                                </span>
-                            </div>
-
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="terms" required>
-                                <label class="form-check-label text-muted" for="terms" style="font-size: 0.9rem;">
-                                    I agree to the <a href="#" class="fw-bold"
-                                        style="color: var(--primary-color);">Terms of Service</a>
-                                </label>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary-custom">
-                                Create Account
-                            </button>
-                        </form>
-
-                        <div class="divider">Or register with</div>
-
-                        <div class="row g-2 mb-4">
-                            <div class="col-6">
-                                <button class="social-btn">
-                                    <i class="bi bi-google text-danger"></i> Google
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <button class="social-btn">
-                                    <i class="bi bi-facebook text-primary"></i> Facebook
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <p class="switch-link">Already have an account? <span onclick="switchForm('login')">Sign
-                                    In</span></p>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+                            <label for="signupPassword">Password</label>
                         </div>
                     </div>
-
                 </div>
 
-               
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification Container -->
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="authToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
-            aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body" id="toastMessage">
-                    <!-- Message injected via JS -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="termsCheck">
+                    <label class="form-check-label small" for="termsCheck">
+                        I agree to the <a href="#" style="color: var(--brand-primary);">Terms</a> and <a href="#"
+                            style="color: var(--brand-primary);">Privacy Policy</a>
+                    </label>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
+
+                <button type="submit" class="btn btn-brand w-100 mb-3">Sign Up</button>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="social-login">
+                    <a href="#" class="social-btn"><i class="fab fa-google text-danger"></i> Google</a>
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f text-primary"></i> Facebook</a>
+                </div>
+
+                <div class="toggle-text">
+                    Already have an account? <span class="toggle-link" onclick="toggleForm('login')">Login</span>
+                </div>
+            </form>
         </div>
+
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // --- Toggle between Login and Signup ---
-        function switchForm(type) {
-            const loginContainer = document.getElementById('loginContainer');
-            const signupContainer = document.getElementById('signupContainer');
-            const authCard = document.querySelector('.auth-card');
-
-            // Reset animation
-            authCard.style.animation = 'none';
-            authCard.offsetHeight; /* trigger reflow */
-            authCard.style.animation = 'fadeIn 0.5s ease-in-out';
+        // Toggle between Login and Signup
+        function toggleForm(type) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
 
             if (type === 'signup') {
-                loginContainer.style.display = 'none';
-                signupContainer.style.display = 'block';
+                loginForm.classList.remove('active');
+                signupForm.classList.add('active');
             } else {
-                signupContainer.style.display = 'none';
-                loginContainer.style.display = 'block';
+                signupForm.classList.remove('active');
+                loginForm.classList.add('active');
             }
         }
 
-        // --- Toggle Password Visibility ---
-        function togglePassword(inputId, iconElement) {
-            const input = document.getElementById(inputId);
-            const icon = iconElement.querySelector('i');
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            const currentTheme = html.getAttribute('data-bs-theme');
 
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
+            if (currentTheme === 'light') {
+                html.setAttribute('data-bs-theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
             } else {
-                input.type = 'password';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
+                html.setAttribute('data-bs-theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         }
-
-        // --- Form Handling & Toast Feedback ---
-        const toastEl = document.getElementById('authToast');
-        const toast = new bootstrap.Toast(toastEl);
-        const toastMessage = document.getElementById('toastMessage');
-
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.show();
-        }
-
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-
-            // Simulate loading
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Signing in...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                showToast("Successfully Signed In! Redirecting...");
-                // Here you would normally redirect to dashboard
-            }, 1500);
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-
-            // Simulate loading
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Account...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                showToast("Account Created Successfully!");
-                switchForm('login'); // Switch back to login after success
-            }, 1500);
-        });
     </script>
 </body>
 
